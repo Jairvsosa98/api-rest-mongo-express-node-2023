@@ -1,10 +1,16 @@
-import express from 'express'
+import { Router } from 'express';
 import { login, register } from '../controllers/auth.controller.js';
 import { body } from 'express-validator';
 import { authValidation } from '../middlewares/authValidation.js';
-const router = express.Router();
+const router = Router();
 
 router.post('/register', [
+    body('name', "El nombre es requerido")
+        .trim()
+        .notEmpty(),
+    body('surname', "El apellido es requerido")
+        .trim()
+        .notEmpty(),
     body('email', "Formato de e-mail incorrecto")
         .trim()
         .isEmail()

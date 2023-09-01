@@ -6,7 +6,7 @@ import authRouter from './routers/auth.route.js';
 
 const app = express();
 app.use(express.json());
-app.use('/api/v1', authRouter);
+app.use('/api/v1/auth', authRouter);
 
 const PORT = process.env.PORT || 9090;
-app.listen(PORT, () => console.log("❤❤❤ http://localhost:9090:" + PORT));
+app.listen(PORT, () => console.log("❤❤❤ http://localhost:" + PORT));
