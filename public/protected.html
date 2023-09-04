@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruta Protegida</title>
+</head>
+
+<body>
+    <h1>Ruta Protegida</h1>
+    <div id="app">
+        <h2 id="email">Email:</h2>
+        <h2 id="name">Name:</h2>
+        <h2 id="surname">Surname:</h2>
+
+        <button id="logout">Cerrar Sesión</button>
+    </div>
+
+
+</body>
+<script>
+
+    const logout = document.getElementById('logout');
+    logout.addEventListener('click', async () => {
+        const res = await fetch('/api/v1/auth/logout', {
+            method: 'GET'
+        });
+        console.log(res);
+    });
+
+    document.addEventListener('DOMContentLoaded', async (e) => {
+        try {
+
+            const resToken = await fetch('/api/v1/auth/refresh', {
+                method: "GET",
+                credentials: "include"
+            })
+
+            const { token } = await resToken.json()
+
+            const res = await fetch('/api/v1/auth/protected', {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token,
+                },
+                // credentials: "include"
+            })
+            console.log(res.ok, res.status);
+            const data = await res.json();
+
+            if (res.ok) {
+                document.getElementById('email').textContent = data.email;
+                document.getElementById('name').textContent = data.name;
+                document.getElementById('surname').textContent = data.surname;
+            }
+
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    })
+</script>
+
+</html>
