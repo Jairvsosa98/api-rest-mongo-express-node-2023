@@ -1,7 +1,5 @@
 import { User } from "../models/User.js";
-import jwt from "jsonwebtoken";
 import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
-import { errorTokens } from "../utils/errorTokens.js";
 
 export const register = async (req, res) => {
     const { email, name, surname, password } = req.body;
@@ -39,7 +37,7 @@ export const login = async (req, res) => {
 
         return res.json({ token, expiresIn });
     } catch (error) {
-        return res.status(500).json({ success: false, message: "Algo falló en el servidor" });
+        res.status(401).json({ success: false, message : "Error en el servidor" });
     }
 };
 
@@ -49,27 +47,17 @@ export const infoUser = async (req, res) => {
         return res.json({ name: user.name, surname: user.surname, email: user.email });
     } catch (error) {
         console.log(error.message);
-        const message = errorsValidateToken(error);
 
-        res.status(401).json({ success: false, message });
+        res.status(500).json({ success: false, message : "Error en el servidor" });
     }
 };
 export const refreshToken = (req, res) => {
     try {
-        const refreshTokenCookie = req.cookies?.refreshToken;
-        if (!refreshTokenCookie) throw new Error('No existe el token');
-
-        const { uid } = jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH);
-
-        const { token, expiresIn } = generateToken(uid);
-
+        const { token, expiresIn } = generateToken(req.uid);
         return res.json({ token, expiresIn });
 
     } catch (error) {
-        console.log(error);
-        const message = errorTokens(error);
-
-        return res.status(401).json({ success: false, message });
+        res.status(401).json({ success: false, message : "Error en el servidor" });
     }
 
 }
