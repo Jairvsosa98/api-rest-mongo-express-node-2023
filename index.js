@@ -1,11 +1,11 @@
 import 'dotenv/config'
-import './database/connectDB.js'
 
 import express from "express";
 import cors from "cors";
-
-import authRouter from './routers/auth.route.js';
 import cookieParser from 'cookie-parser';
+
+import './database/connectDB.js'
+import authRouter from './routers/auth.route.js';
 import linkRouter from './routers/link.route.js';
 import redirectRouter from './routers/redirect.route.js';
 
