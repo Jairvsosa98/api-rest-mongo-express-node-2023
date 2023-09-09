@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { Link } from "./../models/Link.js";
+import { Link } from "../models/Link.js";
 
 export const getLinks = async (req, res) => {
 

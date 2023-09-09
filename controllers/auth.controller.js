@@ -1,5 +1,5 @@
 import { User } from "./../models/User.js";
-import { generateRefreshToken, generateToken } from "./../utils/tokenManager.js";
+import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
 
 export const register = async (req, res) => {
     const { email, name, surname, password } = req.body;
@@ -38,7 +38,7 @@ export const login = async (req, res) => {
 
         return res.json({ token, expiresIn });
     } catch (error) {
-        res.status(401).json({ success: false, message : "Error en el servidor" });
+        res.status(401).json({ success: false, message: "Error en el servidor" });
     }
 };
 
@@ -49,7 +49,7 @@ export const infoUser = async (req, res) => {
     } catch (error) {
         console.log(error.message);
 
-        res.status(500).json({ success: false, message : "Error en el servidor" });
+        res.status(500).json({ success: false, message: "Error en el servidor" });
     }
 };
 export const refreshToken = (req, res) => {
@@ -58,7 +58,7 @@ export const refreshToken = (req, res) => {
         return res.json({ token, expiresIn });
 
     } catch (error) {
-        res.status(401).json({ success: false, message : "Error en el servidor" });
+        res.status(401).json({ success: false, message: "Error en el servidor" });
     }
 
 }

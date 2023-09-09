@@ -1,4 +1,4 @@
-import { Link } from "./../models/Link.js";
+import { Link } from "../models/Link.js";
 
 export const redirectLink = async (req, res) => {
     try {
