@@ -6,7 +6,12 @@ h1 {
 }
 
 body {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
   background-image: url("../assets/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -47,6 +52,7 @@ p {
   display: block;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
+
 
 .footer {
   position: absolute;
