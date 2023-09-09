@@ -44,15 +44,8 @@ p {
   border-radius: 50%;
   overflow: hidden;
   margin: 20px;
-}
-
-.img-circle img {
-  width: 100%;
-  height: auto;
-  display: block;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 }
-
 
 .footer {
   position: absolute;
