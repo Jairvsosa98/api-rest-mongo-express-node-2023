@@ -12,7 +12,7 @@ export const getLinks = async (req, res) => {
         res.status(500).json({ success: false, message: "Error de servidor" });
     }
 }
-export const getLink = async (req, res) => {
+export const getLinkCRUD = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -25,6 +25,22 @@ export const getLink = async (req, res) => {
         return res.status(200).json({ succes: true, data: link })
     } catch (error) {
         console.log(error.kind);
+        if (error.kind === "ObjectId") return res.status(403).json({ success: false, message: "Formato id incorrecto" })
+        return res.status(500).json({ success: false, message: "Error de servidor" });
+    }
+}
+
+export const getLink = async (req, res) => {
+    try {
+        const { nanoLink } = req.params;
+
+        const link = await Link.findOne({ nanoLink });
+
+        if (!link) return res.status(404).json({ success: false, message: "No existe el link" });
+
+        return res.status(200).json({ succes: true, data: link.longLink })
+    } catch (error) {
+        console.log(error);
         if (error.kind === "ObjectId") return res.status(403).json({ success: false, message: "Formato id incorrecto" })
         return res.status(500).json({ success: false, message: "Error de servidor" });
     }
@@ -47,9 +63,28 @@ export const createLink = async (req, res) => {
     }
 }
 
-export const updateLink = async(req, res) => {
+export const updateLink = async (req, res) => {
     try {
-        
+        const { id } = req.params;
+        const { longLink } = req.body
+
+        console.log(longLink);
+
+        if (!longLink.startsWith('https://')) {
+            longLink = 'https://' + longLink;
+        }
+
+        const link = await Link.findById(id);
+
+        if (!link) return res.status(404).json({ error: "no existe link" });
+
+        if (!link.uid.equals(req.uid))
+            return res.status(401).json({ error: "No le pertenece ese link 🤡" });
+
+        // actualizar
+        link.longLink = longLink;
+        await link.save();
+        return res.status(200).json({ success: true, message: "El link se ha Actualizado Correctamente" })
     } catch (error) {
         console.log(error);
     }
@@ -66,7 +101,7 @@ export const removeLink = async (req, res) => {
             return res.status(401).json({ error: "no es tu link payaso 🤡" });
 
         await link.deleteOne();
-        return res.json({ link });
+        return res.status(200).json({ success: true, message: "Se eliminó el link Correctamente" });
     } catch (error) {
         console.log(error);
         if (error.kind === "ObjectId") return res.status(403).json({ error: "Formato id incorrecto" });

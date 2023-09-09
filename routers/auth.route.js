@@ -3,6 +3,7 @@ import { infoUser, login, logout, refreshToken, register } from '../controllers/
 import { requireToken } from '../middlewares/requireToken.js';
 import { requireRefreshToken } from '../middlewares/requireRefreshToken.js';
 import { bodyLoginValidator, bodyRegisterValidator } from '../middlewares/validatorManager.js';
+
 const router = Router();
 
 router.post('/register', bodyRegisterValidator, register);

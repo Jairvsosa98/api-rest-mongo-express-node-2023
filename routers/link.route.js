@@ -12,10 +12,9 @@ const router = Router();
 // DELETE   /api/v1/links/:id       remove link
 
 router.get('/', requireToken, getLinks);
-router.get('/:id', requireToken, getLink);
+router.get('/:nanoLink', getLink);
 router.post('/', requireToken, bodyLinkValidator, createLink);
-router.patch('/:id', requireToken, bodyLinkValidator, updateLink);
-
+router.patch('/:id', requireToken, paramsLinkValidator, bodyLinkValidator, updateLink);
 router.delete('/:id', requireToken, paramsLinkValidator, removeLink);
 
 
