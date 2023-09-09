@@ -1,5 +1,5 @@
-import { User } from "../models/User.js";
-import { generateRefreshToken, generateToken } from "../utils/tokenManager.js";
+import { User } from "./../models/User.js";
+import { generateRefreshToken, generateToken } from "./../utils/tokenManager.js";
 
 export const register = async (req, res) => {
     const { email, name, surname, password } = req.body;
