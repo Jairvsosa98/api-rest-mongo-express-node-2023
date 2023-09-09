@@ -1,45 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+  <title>API SHORTCUT</title>
+  <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
-    <form id="form" action="">
-        <input type="email" value="sofia@gmail.com" name="email" id="email" />
-        <input type="password" value="123456" name="password" id="password" />
-        <button type="submit">Acceder</button>
-    </form>
+  <h1>API SHORTCUT</h1>
+  <img src="./assets/cat-img.jpg" class="img-circle" alt="Imagen de Brigitte Werner en Pixabay">
+  <p id="cat">Esta es una API para acortar URL</p>
+
 </body>
-<script>
-    const form = document.getElementById('form');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        try {
-            const res = await fetch('http://localhost:9090/api/v1/auth/login', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "Application/json"
-                },
-                body: JSON.stringify({
-                    email: email.value,
-                    password: password.value
-                })
-            })
-            console.log(res.ok,res.status);
-            const {token} = await res.json();
-        } catch (error) {
-            console.error(error);
-        }
-    })
-
-</script>
-
-</html>
