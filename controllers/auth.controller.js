@@ -7,21 +7,23 @@ export const register = async (req, res) => {
 
         //alternativa buscando por email
         let user = await User.findOne({ email });
-        if (user) throw new Error("Email ya registrado 😒");
+
+        if (user) return res.status(200).json({ success: false, message: "Email ya registrado 😒" });
 
         user = new User({ email, name, surname, password });
+
         await user.save();
 
         const { token, expiresIn } = generateToken(user.id);
         generateRefreshToken(user.id, res);
 
-        return res.json({ token, expiresIn });
+        return res.status(201).json({ token, expiresIn });
     } catch (error) {
         console.log(error);
         // Alternativa por defecto mongoose
         if (error.code === 11000) return res.status(403).json({ success: false, message: "Ya existe este usuario" });
 
-        return res.status(500).json({ success: false, message: "Algo falló en el servidor", });
+        return res.status(500).json({ success: false, message: "Algo falló en el servidor" });
     }
 };
 

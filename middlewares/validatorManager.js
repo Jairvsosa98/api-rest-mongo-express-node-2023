@@ -11,11 +11,11 @@ export const authValidation = (req, res, next) => {
     next();
 }
 
-export const paramsLinkValidator =  [
-    param("id","Formato no válido (express validator)")
-    .trim()
-    .notEmpty()
-    .escape(),
+export const paramsLinkValidator = [
+    param("id", "Formato no válido (express validator)")
+        .trim()
+        .notEmpty()
+        .escape(),
     authValidation
 ]
 
@@ -32,7 +32,7 @@ export const bodyLinkValidator = [
                 return value;
             } catch (error) {
                 // console.log(error);
-                throw new Error("not found longlink 404")
+                throw new Error("Link Inválido")
             }
         }),
     authValidation

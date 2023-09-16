@@ -9,7 +9,7 @@ export const generateToken = (uid) => {
         return { token, expiresIn }
 
     } catch (error) {
-        console.log(message);
+        console.log(error);
     }
 };
 
@@ -22,7 +22,7 @@ export const generateRefreshToken = (uid, res) => {
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: !(process.env.APP_MODE === 'developer'),
-            expires: new Date(Date.now() + expiresIn)
+            expires: new Date(Date.now() + expiresIn * 1000)
         });
     } catch (error) {
         console.error(error);
